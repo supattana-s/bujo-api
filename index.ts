@@ -1,10 +1,18 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express, { Express, NextFunction, Request, Response } from "express";
-const port = 8000;
+import { Send, Query } from "express-serve-static-core";
 
 const app: Express = express();
 
 app.get("/", (req: Request, res: Response, next: NextFunction) => {
-    res.send("Hello from Express + TS!!!!!");
+    res.send({
+        username: "myname",
+        password: 12345,
+    });
 });
 
-app.listen(port, () => console.log(`server listening on port: ${port}`));
+app.listen(process.env.PORT, () =>
+    console.log(`server listening on port: ${process.env.PORT}`)
+);
