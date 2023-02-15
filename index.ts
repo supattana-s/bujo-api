@@ -1,11 +1,11 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import express, { Express, NextFunction, Request, Response } from "express";
-import { Send, Query } from "express-serve-static-core";
+import express, { Express } from "express";
 import cors from "cors";
 import todoRoute from "./src/routes/todoRoute";
 import error from "./src/middleware/error";
+import notFound from "./src/middleware/notFound";
 
 const app: Express = express();
 
@@ -15,6 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/todos", todoRoute);
 
+app.use(notFound);
 app.use(error);
 app.listen(process.env.PORT, () =>
     console.log(`server listening on port: ${process.env.PORT}`)
