@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import AppError from "../utils/appError";
 import validator from "validator";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import User from "../schema/User";
 import { UserInterface } from "../interfaces/user.interfaces";
 
