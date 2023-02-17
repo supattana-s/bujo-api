@@ -6,8 +6,18 @@ import jwt from "jsonwebtoken";
 import User from "../schema/User";
 import { UserInterface } from "../interfaces/user.interfaces";
 
+type payloadTypes = {
+    id: string;
+};
+
+const genToken = (payload: payloadTypes) => {
+    return jwt.sign(payload, process.env.JWTPRIVATEKEY || "privateKey", {
+        expiresIn: process.env.EXPIREDIN || "7d",
+    });
+};
+
 export const register = async (
-    req: Request,
+    req: Request<{}, {}, UserInterface, {}, {}>,
     res: Response,
     next: NextFunction
 ) => {
@@ -19,7 +29,7 @@ export const register = async (
         mobilePhone,
         firstName,
         lastName,
-    } = req.user;
+    } = req.body;
 
     if (!email && !mobilePhone) {
         throw new AppError(400, "Email or mobilePhone is required");
@@ -46,7 +56,7 @@ export const register = async (
         }
     }
 
-    const hashedPassword = await bcrypt.hash(password, process.env.SALT || 12);
+    const hashedPassword = await bcrypt.hash(password, 12);
 
     const user: UserInterface = await User.create({
         username,
@@ -57,5 +67,11 @@ export const register = async (
         mobilePhone: mobilePhone ? email : "",
     });
 
-    res.status(200).json({ user });
+    if (!user.id) {
+        throw new AppError(500, "something went wrong");
+    }
+
+    const token: string = genToken({ id: user.id });
+
+    res.status(200).json({ token });
 };
