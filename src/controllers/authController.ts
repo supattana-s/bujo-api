@@ -75,3 +75,9 @@ export const register = async (
 
     res.status(200).json({ token });
 };
+
+export const login = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {};
