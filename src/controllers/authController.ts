@@ -17,7 +17,7 @@ const genToken = (payload: payloadTypes) => {
 };
 
 export const register = async (
-    req: Request<{}, {}, UserInterface, {}, {}>,
+    req: Request,
     res: Response,
     next: NextFunction
 ) => {
@@ -80,4 +80,7 @@ export const login = async (
     req: Request,
     res: Response,
     next: NextFunction
-) => {};
+) => {
+    // console.log(req.user);
+    res.status(200).json({ user: req.user });
+};
