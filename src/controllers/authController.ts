@@ -84,3 +84,11 @@ export const login = async (
     // console.log(req.user);
     res.status(200).json({ user: req.user });
 };
+
+export const getme = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    res.status(200).json({ user: req.user });
+};

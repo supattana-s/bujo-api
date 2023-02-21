@@ -4,6 +4,7 @@ import authenticate from "../middleware/authenticate";
 const route: Router = express.Router();
 
 route.post("/register", authController.register);
-route.get("/login", authenticate, authController.login);
+route.post("/login", authController.login);
+route.get("/me", authenticate, authController.getme);
 
 export default route;
