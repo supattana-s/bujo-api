@@ -81,8 +81,42 @@ export const login = async (
     res: Response,
     next: NextFunction
 ) => {
-    // console.log(req.user);
-    res.status(200).json({ user: req.user });
+    try {
+        const { username, password, mobilePhone, email } = req.body;
+
+        if (!username && !mobilePhone && !email) {
+            throw new AppError(
+                400,
+                "username or mobilePhone or email or password is required"
+            );
+        }
+
+        const user = await User.findOne({
+            $or: [{ username }, { mobilePhone }, { email }],
+        });
+
+        if (!user) {
+            throw new AppError(
+                400,
+                "username or mobilePhone or email password is invalid"
+            );
+        }
+
+        const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordCorrect) {
+            throw new AppError(
+                400,
+                "username or mobilePhone or email or password is invalid"
+            );
+        }
+
+        const token = genToken({ id: user.id });
+
+        res.status(200).json(token);
+    } catch (err) {
+        next(err);
+    }
 };
 
 export const getme = async (
