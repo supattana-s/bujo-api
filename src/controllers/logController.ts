@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import AppError from "../utils/appError";
 
-export const getAllTodos = async (
+export const getAllLogs = async (
     req: Request,
     res: Response,
     next: NextFunction
@@ -13,7 +13,7 @@ export const getAllTodos = async (
     }
 };
 
-export const createTodo = async (
+export const createLog = async (
     req: Request,
     res: Response,
     next: NextFunction

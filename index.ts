@@ -3,7 +3,7 @@ dotenv.config();
 
 import express, { Express } from "express";
 import cors from "cors";
-import todoRoute from "./src/routes/todoRoute";
+import logRoute from "./src/routes/logRoute";
 import error from "./src/middleware/error";
 import notFound from "./src/middleware/notFound";
 import mongooseServerConnect from "./src/config/mongooseServerConnecting";
@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(mongooseServerConnect);
 
 app.use("/auth", authRoute);
-app.use("/todos", todoRoute);
+app.use("/todos", logRoute);
 
 app.use(notFound);
 app.use(error);
