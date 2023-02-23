@@ -8,6 +8,7 @@ import error from "./src/middleware/error";
 import notFound from "./src/middleware/notFound";
 import mongooseServerConnect from "./src/config/mongooseServerConnecting";
 import authRoute from "./src/routes/authRoute";
+import authenticate from "./src/middleware/authenticate";
 
 const app: Express = express();
 
@@ -18,7 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(mongooseServerConnect);
 
 app.use("/auth", authRoute);
-app.use("/todos", logRoute);
+app.use("/logs", authenticate, logRoute);
 
 app.use(notFound);
 app.use(error);

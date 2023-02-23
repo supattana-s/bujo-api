@@ -2,6 +2,10 @@ import { Schema, model } from "mongoose";
 import { LogInterface } from "../interfaces/log.interfaces";
 
 const logSchema = new Schema<LogInterface>({
+    user_id: {
+        type: String,
+        required: true,
+    },
     title: {
         type: String,
         required: true,
@@ -9,6 +13,7 @@ const logSchema = new Schema<LogInterface>({
     type: {
         type: String,
         required: true,
+        default: "note",
     },
     completed: {
         type: Boolean,
