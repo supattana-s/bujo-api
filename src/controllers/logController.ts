@@ -9,7 +9,14 @@ export const getAllLogs = async (
     next: NextFunction
 ) => {
     try {
-        res.json({ message: "hi" });
+        const { id } = req.user;
+
+        const logs = await Log.find({ user_id: id });
+
+        if (!logs) {
+            res.status(200).json({ message: "please create some logs" });
+        }
+        res.status(200).json(logs);
     } catch (err) {
         next(err);
     }
