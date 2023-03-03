@@ -5,5 +5,6 @@ const route: Router = express.Router();
 
 route.post("/", logController.createLog);
 route.get("/", logController.getAllLogs);
+route.patch("/:logId", logController.updateLog);
 
 export default route;
